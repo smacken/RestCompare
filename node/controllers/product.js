@@ -1,5 +1,9 @@
+var db = require('../models')
+
 exports.index = function(req, res){
-  res.send('product index');
+  db.Products.findAll({}).success(function(products){
+    res.send(products);
+  });
 };
 
 exports.new = function(req, res){
