@@ -16,6 +16,7 @@ namespace RestCompare.cli
         public void Configuration(IAppBuilder appBuilder)
         {
             var config = new HttpConfiguration();
+            //config.Routes.MapHttpRoute("defaultVersioned", "v{version}/{controller}/{id}", new { id = RouteParameter.Optional }, new { version = @"\d+" });
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/v1/{controller}/{id}",

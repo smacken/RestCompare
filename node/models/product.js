@@ -2,9 +2,11 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Product = sequelize.define("Products", {
-    productId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+    Id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    Name: DataTypes.STRING,
+    Description: DataTypes.STRING,
+    createdAt: false,
+    updatedAt: false
   }, {
     classMethods: {
       associate: function(models) {

@@ -5,7 +5,8 @@
     "database": "rest",
     "host": "localhost",
     "dialect": "sqlite",
-    "storage": "../../db/rest.db"
+    "storage": "../db/rest.db",
+    "language":"en"
   },
   "test": {
     "username": "root",

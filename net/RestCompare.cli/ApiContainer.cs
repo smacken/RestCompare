@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Repository;
+using Repository.EntityFramework;
+using RestCompare.Data;
+using RestCompare.cli.Controllers;
 
 namespace RestCompare.cli
 {
