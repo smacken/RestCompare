@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Integration.WebApi;
 using Repository;
 using Repository.EntityFramework;
 using RestCompare.Data;
@@ -15,7 +16,9 @@ namespace RestCompare.cli
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.Register(c => new Car(c.Resolve<IDriver>())).As<IVehicle>();
+            builder.RegisterApiControllers(typeof (ProductController).Assembly);
+            builder.RegisterGeneric(typeof (EFRepository<Db, KeyedObject<int>,int>))
+                   .As(typeof (EFRepository<Db, KeyedObject<int>, int>));
             base.Load(builder);
         }
     }

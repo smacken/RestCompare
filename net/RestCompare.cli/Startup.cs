@@ -26,12 +26,8 @@ namespace RestCompare.cli
             appBuilder.UseWebApi(config);
 
             var builder = new ContainerBuilder();
-            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-            //       .Where(t => !t.IsAbstract && typeof(ApiController).IsAssignableFrom(t))
-            //       .InstancePerMatchingLifetimeScope(AutofacWebApiDependencyResolver.ApiRequestTag);
-
+            builder.RegisterModule(new ApiContainer());
             var container = builder.Build();
-
             var resolver = new AutofacWebApiDependencyResolver(container);
             config.DependencyResolver = resolver;
         }

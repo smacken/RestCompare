@@ -44,6 +44,15 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\RestCompare\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\RestCompare\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\RestCompare\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects">
+      <HintPath>..\RestCompare\packages\CompareNETObjects.3.01.0.0\lib\net45\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\RestCompare\packages\Microsoft.Owin.2.0.2\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -56,10 +65,20 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\RestCompare\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\RestCompare\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\RestCompare\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Repository">
+      <HintPath>..\RestCompare\packages\Repository.1.0.6.17\lib\net45\Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="Repository.EntityFramework">
+      <HintPath>..\RestCompare\packages\Repository.EntityFramework.1.0.7.1\lib\net45\Repository.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -83,6 +102,7 @@
   <ItemGroup>
     <Compile Include="ApiContainer.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RestController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
