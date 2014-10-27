@@ -16,10 +16,13 @@ namespace RestCompare.cli
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterApiControllers(typeof (ProductController).Assembly);
-            builder.RegisterGeneric(typeof (EFRepository<Db, KeyedObject<int>,int>))
-                   .As(typeof (EFRepository<Db, KeyedObject<int>, int>));
+            builder.RegisterGeneric(typeof (EFRepository<,,>))
+                   .As(typeof (EFRepository<,,>));
+
+            builder.RegisterApiControllers(typeof(ProductController).Assembly);
+
             base.Load(builder);
         }
     }
 }
+    

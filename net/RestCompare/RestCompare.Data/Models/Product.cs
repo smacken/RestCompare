@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Repository;
+﻿using System.ComponentModel.DataAnnotations;
+using RestCompare.Data.Validation;
+using FluentValidation.Attributes;
 
 namespace RestCompare.Data.Models
 {
+    [Validator(typeof(ProductValidator))]
     public class Product
     {
         [Key]

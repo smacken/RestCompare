@@ -5,8 +5,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
+using FluentValidation.WebApi;
 using Owin;
 
 namespace RestCompare.cli
@@ -22,14 +25,27 @@ namespace RestCompare.cli
                 routeTemplate: "api/v1/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            appBuilder.UseWebApi(config);
-
+            config.MapHttpAttributeRoutes(new CustomDirectRouteProvider());
+            
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ApiContainer());
             var container = builder.Build();
             var resolver = new AutofacWebApiDependencyResolver(container);
             config.DependencyResolver = resolver;
+
+            FluentValidationModelValidatorProvider.Configure(config);
+
+            appBuilder.UseWebApi(config);
+        }
+    }
+
+    public class CustomDirectRouteProvider : DefaultDirectRouteProvider
+    {
+        protected override IReadOnlyList<IDirectRouteFactory>
+        GetActionRouteFactories(HttpActionDescriptor actionDescriptor)
+        {
+            return actionDescriptor.GetCustomAttributes<IDirectRouteFactory>
+            (inherit: true);
         }
     }
 }
