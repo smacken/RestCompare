@@ -32,26 +32,38 @@ namespace RestCompare.cli.Controllers
             return _repository.Find(id).Object;
         }
 
+        [Route("")]
         [HttpPost]
         [ValidationResponseFilter]
-        public HttpResponseMessage Post(T item)
+        public HttpResponseMessage Post([FromBody]T item)
         {
             _repository.Insert(item);
+            _repository.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [Route("")]
         [HttpPut]
         [ValidationResponseFilter]
         public HttpResponseMessage Put(int key, T item)
         {
             _repository.Update(key, item);
+            _repository.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [Route("")]
         [HttpDelete]
         public void Delete(int id)
         {
             _repository.RemoveByKey(id);
+            _repository.SaveChanges();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _repository.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

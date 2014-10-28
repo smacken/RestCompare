@@ -3,8 +3,14 @@
 module.exports = function(sequelize, DataTypes) {
   var Product = sequelize.define("Products", {
     Id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    Name: DataTypes.STRING,
-    Description: DataTypes.STRING,
+    Name: { 
+      type: DataTypes.STRING, 
+      validate: { isAlphanumeric: true, notNull: true}
+    },
+    Description: { 
+      type: DataTypes.STRING,
+      validate: { isAlphanumeric: true}
+    },
     createdAt: false,
     updatedAt: false
   }, {

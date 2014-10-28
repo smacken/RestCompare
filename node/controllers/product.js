@@ -6,10 +6,6 @@ exports.index = function(req, res){
   });
 };
 
-exports.new = function(req, res){
-  res.send('new product');
-};
-
 exports.create = function(req, res){
   db.Products.create(req.body).success(function(product){
     res.json(product);
@@ -22,12 +18,15 @@ exports.show = function(req, res){
   });
 };
 
-exports.edit = function(req, res){
-  res.send('edit product ' + req.product.title);
-};
-
 exports.update = function(req, res){
-  res.send('update product ' + req.product.title);
+  db.Products.find(req.params.product).success(function(product){
+    product.updateAttributes({
+      name: req.params.name,
+      description: req.params.description
+    }).success(function(){
+      res.json(product);
+    });
+  });
 };
 
 exports.destroy = function(req, res){
