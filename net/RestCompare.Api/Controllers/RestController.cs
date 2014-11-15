@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using RestCompare.Api.Validation;
 using SharpRepository.Repository;
+using SharpRepository.Repository.Queries;
 
 namespace RestCompare.Api.Controllers
 {
@@ -22,6 +22,21 @@ namespace RestCompare.Api.Controllers
         public IEnumerable<T> Get()
         {
             return _repository.GetAll();
+        }
+
+        // GET: api/Clubs/pageSize/pageNumber/orderBy(optional) 
+        [Route("{pageSize:int}/{pageNumber:int}/{orderBy:alpha?}")]
+        public IHttpActionResult Get(int pageSize = 10, int pageNumber = 1, string orderBy = "")
+        {
+            var totalCount = _repository.Count();
+            var totalPages = Math.Ceiling((double)totalCount / pageSize);
+            var items = _repository.GetAll(new PagingOptions<T>(pageNumber, pageSize, orderBy));
+            return Ok(new
+            {
+                TotalCount = totalCount,
+                Pages = totalPages,
+                Items = items
+            });
         }
 
         [Route("{id:int}")]
