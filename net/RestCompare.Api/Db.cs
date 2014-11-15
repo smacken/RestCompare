@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestCompare.Data.Models;
+using System.Web;
+using RestCompare.Api.Models;
 
-namespace RestCompare.Data
+namespace RestCompare.Api
 {
     public class Db : DbContext
     {
         public DbSet<Product> Products { get; set; }
 
-
+        public Db() : base("Db")
+        {
+            Database.SetInitializer<Db>(null);
+        }
     }
 }

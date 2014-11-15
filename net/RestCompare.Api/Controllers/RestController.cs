@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using Repository.EntityFramework;
-using RestCompare.Data;
+using RestCompare.Api.Validation;
+using SharpRepository.Repository;
 
-namespace RestCompare.cli.Controllers
+namespace RestCompare.Api.Controllers
 {
-    public class RestController<T> : ApiController where T: class
+    public abstract class RestController<T> : ApiController where T : class, new()
     {
-        private readonly EFRepository<Db, T, int> _repository;
+        private readonly IRepository<T, int> _repository;
 
-        public RestController(EFRepository<Db, T, int> repository)
+        protected RestController(IRepository<T, int> repository)
         {
             _repository = repository;
         }
@@ -23,13 +21,13 @@ namespace RestCompare.cli.Controllers
         [Route("")]
         public IEnumerable<T> Get()
         {
-            return _repository.Items.AsEnumerable();
+            return _repository.GetAll();
         }
 
         [Route("{id:int}")]
         public T Get(int id)
         {
-            return _repository.Find(id).Object;
+            return _repository.Get(id);
         }
 
         [Route("")]
@@ -37,8 +35,7 @@ namespace RestCompare.cli.Controllers
         [ValidationResponseFilter]
         public HttpResponseMessage Post([FromBody]T item)
         {
-            _repository.Insert(item);
-            _repository.SaveChanges();
+            _repository.Add(item);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
@@ -47,8 +44,7 @@ namespace RestCompare.cli.Controllers
         [ValidationResponseFilter]
         public HttpResponseMessage Put(int key, T item)
         {
-            _repository.Update(key, item);
-            _repository.SaveChanges();
+            _repository.Update(item);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
@@ -56,8 +52,7 @@ namespace RestCompare.cli.Controllers
         [HttpDelete]
         public void Delete(int id)
         {
-            _repository.RemoveByKey(id);
-            _repository.SaveChanges();
+            _repository.Delete(id);
         }
 
         protected override void Dispose(bool disposing)
