@@ -15,6 +15,7 @@ namespace RestCompare.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -25,6 +26,7 @@ namespace RestCompare.Api
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            // Ioc Container config
             var builder = new ContainerBuilder();
             builder.RegisterModule(new ApiContainer());
             var container = builder.Build();
