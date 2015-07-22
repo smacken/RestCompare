@@ -13,7 +13,6 @@ type Product struct {
 	Description string `json:"description"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	DeletedAt   *time.Time
 	Category    Category      `json:"category"`
 	CategoryId  sql.NullInt64 `json:"categoryId" sql:"index"`
 }
