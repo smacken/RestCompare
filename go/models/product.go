@@ -4,17 +4,14 @@ import (
 	"database/sql"
 	"github.com/mholt/binding"
 	"net/http"
-	"time"
 )
 
 type Product struct {
-	Id          int    `json:"id" sql:"not null"`
-	Name        string `json:"name" sql:"not null"`
-	Description string `json:"description"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	Model
+	Name        string        `json:"name" sql:"not null"`
+	Description string        `json:"description"`
 	Category    Category      `json:"category"`
-	CategoryId  sql.NullInt64 `json:"categoryId" sql:"index"`
+	CategoryId  sql.NullInt64 `json:"categoryId" sql:"index:idx_products_bycategory"`
 }
 
 // mapping

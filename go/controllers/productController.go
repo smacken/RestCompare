@@ -14,10 +14,13 @@ import (
 
 func GetDb(req *http.Request) *gorm.DB {
 	db := context.Get(req, config.DbKey)
-
 	gorm := db.(*gorm.DB)
-
 	return gorm
+}
+func GetContext(req *http.Request) *config.Context {
+	ctx := context.Get(req, config.ContextKey)
+	conf := ctx.(*config.Context)
+	return conf
 }
 
 func ProductsList(rw http.ResponseWriter, req *http.Request) {
@@ -28,14 +31,11 @@ func ProductsList(rw http.ResponseWriter, req *http.Request) {
 	products := []models.Product{}
 	if id != "" {
 		if err := db.Where("CategoryId = ?", id).Find(&products).Error; err != nil {
-			fmt.Println("Bailing out")
-			panic(err)
+			http.Error(rw, err.Error(), http.StatusInternalServerError)
 		}
 	} else {
-		err := db.Find(&products).Error
-		if err != nil {
-			fmt.Println("Bailing out")
-			panic(err)
+		if err := db.Find(&products).Error; err != nil {
+			http.Error(rw, err.Error(), http.StatusInternalServerError)
 		}
 	}
 
@@ -47,9 +47,8 @@ func ProductsGet(rw http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	id := vars["id"]
 	product := models.Product{}
-	err := db.First(&product, id).Error
-	if err != nil {
-		panic(err)
+	if err := db.First(&product, id).Error; err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
 	}
 	r := render.New()
 	r.JSON(rw, http.StatusOK, product)
@@ -71,9 +70,19 @@ func ProductsPost(rw http.ResponseWriter, req *http.Request) {
 }
 
 func ProductsPut(rw http.ResponseWriter, req *http.Request) {
-
+	product := new(models.Product)
+	if binding.Bind(req, product).Handle(rw) {
+		return
+	}
+	db := GetDb(req)
+	db.Save(&product)
+	r := render.New()
+	r.JSON(rw, http.StatusOK, product)
 }
 
 func ProductsDelete(rw http.ResponseWriter, req *http.Request) {
-
+	vars := mux.Vars(req)
+	id := vars["id"]
+	db := GetDb(req)
+	db.Delete(id)
 }

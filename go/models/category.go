@@ -3,16 +3,14 @@ package models
 import (
 	"github.com/mholt/binding"
 	"net/http"
-	"time"
 )
 
 type Category struct {
-	Id               int    `json:"id" sql:"not null"`
-	Name             string `json:"name" sql:"not null"`
-	Description      string `json:"description"`
+	Model
+	Name             string `json:"name" sql:"type:varchar(150);not null"`
+	Description      string `json:"description" sql:"type:varchar(250);"`
 	ParentCategoryId int    `json:"id" `
-	CreatedAt        time.Time
-	UpdatedAt        time.Time
+	Products         []Product
 }
 
 // mapping
