@@ -17,7 +17,7 @@ func NewRouter() *mux.Router {
 
 	api := router.PathPrefix("/api").Subrouter()
 	api.Path("/docs").HandlerFunc(controllers.DocsHandler)
-	//api.Path("/categories/{id}/products").HandlerFunc(controllers.ProductsList).Methods("GET")
+	api.Path("/categories/{id}/products").HandlerFunc(controllers.ProductsList).Methods("GET")
 	api.Path("/products").HandlerFunc(controllers.ProductsList).Methods("GET")
 	api.Path("/products/{id}").HandlerFunc(controllers.ProductsGet).Methods("GET")
 	api.Path("/products").HandlerFunc(controllers.ProductsPost).Methods("POST")

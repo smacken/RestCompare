@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/codegangsta/negroni"
+	"gopkg.in/tylerb/graceful.v1"
 	"os"
 	"restcompare/config"
 )
@@ -13,5 +14,5 @@ func main() {
 
 	app.Use(negroni.HandlerFunc(config.ConfigContext()))
 	app.UseHandler(router)
-	app.Run(":" + os.Getenv("port"))
+	graceful.Run(":"+os.Getenv("port"), 10*time.Second, app)
 }
