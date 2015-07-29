@@ -7,15 +7,26 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
 using Microsoft.Framework.DependencyInjection;
+//using Microsoft.Framework.Configuration;
 using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.ConfigurationModel.Json;
+using Microsoft.Data.Entity;
+using Rest.Api.Models;
 
 namespace Rest.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; set; }
         public Startup(IHostingEnvironment env)
         {
-            Configuration = new Configuration().AddJsonFile("config.json").AddEnvironmentVariables();
+            // Setup configuration sources.
+            var configuration = new Configuration()
+                .AddJsonFile("config.json")
+                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
+
+            configuration.AddEnvironmentVariables();
+            Configuration = configuration;
         }
 
         // This method gets called by a runtime.
@@ -23,21 +34,17 @@ namespace Rest.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
-            // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
-            // services.AddWebApiConventions();
+            services.Configure<AppSettings>(x => Configuration.GetSubKey("AppSettings"));
+            services.AddEntityFramework().AddSqlite()
+                .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Db")));
         }
 
         // Configure is called after ConfigureServices is called.
+        // Configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // Configure the HTTP request pipeline.
             app.UseStaticFiles();
-
-            // Add MVC to the request pipeline.
             app.UseMvc();
-            // Add the following route for porting Web API 2 controllers.
-            // routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}");
         }
     }
 }

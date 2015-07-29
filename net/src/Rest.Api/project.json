@@ -1,4 +1,4 @@
-﻿{
+{
   "webroot": "wwwroot",
   "version": "1.0.0-*",
 
@@ -6,16 +6,14 @@
     "Microsoft.AspNet.Mvc": "6.0.0-beta5",
     "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
-    "Microsoft.AspNet.Diagnostics": "1.0.0-beta1",
     "Microsoft.AspNet.StaticFiles": "1.0.0-beta5",
-    "Autofac": "4.0.0-beta5-90",
-    "Autofac.WebApi2": "3.4.0",
-    "Newtonsoft.Json": "7.0.1",
-    "FluentValidation": "5.6.2",
-    "EntityFramework": "7.0.0-beta1",
-    "EntityFramework.SqlServer": "7.0.0-beta1",
-    "EntityFramework.Commands": "7.0.0-beta1",
-    "System.Data.SQLite": "1.0.97"
+    "EntityFramework.SqlServer": "7.0.0-beta6",
+    "EntityFramework.Commands": "7.0.0-beta6",
+    "EntityFramework.Sqlite": "7.0.0-beta6",
+    "Microsoft.Framework.Configuration": "1.0.0-beta6",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta6",
+    "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
+    "Microsoft.Framework.ConfigurationModel": "1.0.0-beta4",
   },
 
   "commands": {
@@ -39,18 +37,5 @@
     "**.xproj",
     "**.user",
     "**.vspscc"
-  ],
-  "configurations": {
-    "Debug": {
-      "compilationOptions": {
-        "define": ["DEBUG", "TRACE"]
-      }
-    },
-    "Release": {
-      "compilationOptions": {
-        "define": ["RELEASE", "TRACE"],
-        "optimize": true
-      }
-    }
-  }
+  ]
 }
