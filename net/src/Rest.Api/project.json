@@ -14,6 +14,7 @@
     "Microsoft.Framework.Configuration.Json": "1.0.0-beta6",
     "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4",
     "Microsoft.Framework.ConfigurationModel": "1.0.0-beta4",
+    "Serilog.Framework.Logging": "1.0.0-beta-43"
   },
 
   "commands": {

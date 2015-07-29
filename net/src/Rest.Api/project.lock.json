@@ -1322,6 +1322,35 @@
           "lib/net45/Remotion.Linq.dll": {}
         }
       },
+      "Serilog/1.5.7": {
+        "compile": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Serilog.dll": {},
+          "lib/net45/Serilog.FullNetFx.dll": {}
+        }
+      },
+      "Serilog.Framework.Logging/1.0.0-beta-43": {
+        "dependencies": {
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5",
+          "Serilog": "1.5.7"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/dnx451/Serilog.Framework.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Serilog.Framework.Logging.dll": {}
+        }
+      },
       "System.Collections/4.0.0-beta-23109": {
         "compile": {
           "ref/net45/_._": {}
@@ -2646,6 +2675,30 @@
         },
         "runtime": {
           "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll": {}
+        }
+      },
+      "Serilog/1.5.7": {
+        "compile": {
+          "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10/Serilog.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10/Serilog.dll": {}
+        }
+      },
+      "Serilog.Framework.Logging/1.0.0-beta-43": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0-beta-23019",
+          "Microsoft.Framework.Logging.Abstractions": "1.0.0-beta5",
+          "Serilog": "1.5.7",
+          "System.Collections": "4.0.10-beta-23019",
+          "System.Linq": "4.0.0-beta-23019",
+          "System.Threading": "4.0.10-beta-23019"
+        },
+        "compile": {
+          "lib/dnxcore50/Serilog.Framework.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Serilog.Framework.Logging.dll": {}
         }
       },
       "System.AppContext/4.0.0-beta-23109": {
@@ -4981,6 +5034,41 @@
         "Remotion.Linq.nuspec"
       ]
     },
+    "Serilog/1.5.7": {
+      "sha512": "OEF9TLKMf3TScnIOaZ49Us/0CJ2sdxHSAXu2AGCUGFcY1NvXt8i4Ur0WylezMmxdXC5nZiJ7EFMydQieDJuA0g==",
+      "files": [
+        "lib/net40/Serilog.dll",
+        "lib/net40/Serilog.FullNetFx.dll",
+        "lib/net40/Serilog.FullNetFx.pdb",
+        "lib/net40/Serilog.FullNetFx.XML",
+        "lib/net40/Serilog.pdb",
+        "lib/net40/Serilog.XML",
+        "lib/net45/Serilog.dll",
+        "lib/net45/Serilog.FullNetFx.dll",
+        "lib/net45/Serilog.FullNetFx.pdb",
+        "lib/net45/Serilog.FullNetFx.XML",
+        "lib/net45/Serilog.pdb",
+        "lib/net45/Serilog.XML",
+        "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10/Serilog.dll",
+        "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10/Serilog.pdb",
+        "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10/Serilog.XML",
+        "Serilog.1.5.7.nupkg",
+        "Serilog.1.5.7.nupkg.sha512",
+        "Serilog.nuspec"
+      ]
+    },
+    "Serilog.Framework.Logging/1.0.0-beta-43": {
+      "sha512": "mkmbzUFuFaTDCyGBinJUxn+spJWMQux3s0McHZ0XpBQsot9IXSOhl5X2Z6zFpnKQFC/3P9W8/Hcs0yOYRh74cA==",
+      "files": [
+        "lib/dnx451/Serilog.Framework.Logging.dll",
+        "lib/dnx451/Serilog.Framework.Logging.xml",
+        "lib/dnxcore50/Serilog.Framework.Logging.dll",
+        "lib/dnxcore50/Serilog.Framework.Logging.xml",
+        "Serilog.Framework.Logging.1.0.0-beta-43.nupkg",
+        "Serilog.Framework.Logging.1.0.0-beta-43.nupkg.sha512",
+        "Serilog.Framework.Logging.nuspec"
+      ]
+    },
     "System.AppContext/4.0.0-beta-23109": {
       "serviceable": true,
       "sha512": "kbBS5q5Qnk8C47zB0XLbi0BpQMx8IO1mQtKhU2zCriambR8aN+3BeelasL5SQBHc0CsOVr0ETCPh9zrzMnBdRQ==",
@@ -6930,7 +7018,8 @@
       "Microsoft.Framework.Configuration >= 1.0.0-beta6",
       "Microsoft.Framework.Configuration.Json >= 1.0.0-beta6",
       "Microsoft.Framework.ConfigurationModel.Json >= 1.0.0-beta4",
-      "Microsoft.Framework.ConfigurationModel >= 1.0.0-beta4"
+      "Microsoft.Framework.ConfigurationModel >= 1.0.0-beta4",
+      "Serilog.Framework.Logging >= 1.0.0-beta-43"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []
