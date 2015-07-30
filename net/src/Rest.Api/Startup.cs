@@ -47,9 +47,9 @@ namespace Rest.Api
             services.AddMvc();
             services.Configure<AppSettings>(x => Configuration.GetSubKey("AppSettings"));
             services.AddEntityFramework().AddSqlite()
-                .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Db")));
+                    .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Data: DefaultConnection:Db")));
             services.AddLogging();
-            services.AddScoped<Db, Db>();
+            services.AddScoped<IDbContext>(x => x.GetService<Db>());
 
             services.AddCors();
         }
@@ -61,7 +61,6 @@ namespace Rest.Api
             app.UseStaticFiles();
             app.UseMvc();
             app.UseCors(policy => policy.WithOrigins("http://example.com"));
-
             loggerfactory.AddSerilog();
         }
     }
