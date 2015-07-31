@@ -6,10 +6,12 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Routing;
+using Microsoft.Framework.Runtime;
 using Microsoft.Framework.DependencyInjection;
-//using Microsoft.Framework.Configuration;
-using Microsoft.Framework.ConfigurationModel;
-using Microsoft.Framework.ConfigurationModel.Json;
+using Microsoft.Framework.Configuration;
+using Microsoft.Framework.Configuration.Json;
+//using Microsoft.Framework.ConfigurationModel;
+//using Microsoft.Framework.ConfigurationModel.Json;
 using Microsoft.Data.Entity;
 using Rest.Api.Models;
 using Serilog;
@@ -20,15 +22,15 @@ namespace Rest.Api
     public class Startup
     {
         public IConfiguration Configuration { get; set; }
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Setup configuration sources.
-            var configuration = new Configuration()
+            var configuration = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
-
-            configuration.AddEnvironmentVariables();
-            Configuration = configuration;
+                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            
+            Configuration = configuration.Build();
 
             // logging config
             Log.Logger = new LoggerConfiguration()
@@ -45,13 +47,13 @@ namespace Rest.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Configure<AppSettings>(x => Configuration.GetSubKey("AppSettings"));
+            //services.Configure<AppSettings>(x => Configuration.GetSubKey("AppSettings"));
             services.AddEntityFramework().AddSqlite()
                     .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Data: DefaultConnection:Db")));
             services.AddLogging();
             services.AddScoped<IDbContext>(x => x.GetService<Db>());
 
-            services.AddCors();
+            //services.AddCors();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -60,7 +62,7 @@ namespace Rest.Api
         {
             app.UseStaticFiles();
             app.UseMvc();
-            app.UseCors(policy => policy.WithOrigins("http://example.com"));
+            //app.UseCors(policy => policy.WithOrigins("http://example.com"));
             loggerfactory.AddSerilog();
         }
     }
