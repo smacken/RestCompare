@@ -10,8 +10,6 @@ using Microsoft.Framework.Runtime;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Configuration.Json;
-//using Microsoft.Framework.ConfigurationModel;
-//using Microsoft.Framework.ConfigurationModel.Json;
 using Microsoft.Data.Entity;
 using Rest.Api.Models;
 using Serilog;
@@ -42,22 +40,17 @@ namespace Rest.Api
               .CreateLogger();
         }
 
-        // This method gets called by a runtime.
-        // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.Configure<AppSettings>(x => Configuration.GetSubKey("AppSettings"));
+            services.Configure<AppSettings>(x => Configuration.GetConfigurationSection("AppSettings"));
             services.AddEntityFramework().AddSqlite()
-                    .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Data: DefaultConnection:Db")));
+                    .AddDbContext<Db>(options => options.UseSqlite(Configuration.Get("Data:DefaultConnection:Db")));
             services.AddLogging();
             services.AddScoped<IDbContext>(x => x.GetService<Db>());
-
             //services.AddCors();
         }
 
-        // Configure is called after ConfigureServices is called.
-        // Configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory)
         {
             app.UseStaticFiles();
